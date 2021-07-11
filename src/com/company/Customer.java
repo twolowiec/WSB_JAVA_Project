@@ -11,5 +11,10 @@ public class Customer {
 
     // TODO Konstruktor
 
+    // Todo metody
+    // nowy klient
+    // usun klienta
+    // albo wyjebie to do osobnej klasy
+
     // TODO toString
 }
