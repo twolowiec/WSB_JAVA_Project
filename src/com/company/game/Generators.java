@@ -1,4 +1,4 @@
-package com.company;
+package com.company.game;
 
 public class Generators {
     // todo listy wartości
