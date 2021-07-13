@@ -13,7 +13,7 @@ public class Menus {
         // rozważyć time limit
     }
 
-    public Integer mainInGameMenu () {
+    public Integer mainInGameMenu() {
         System.out.println("\t *** Menu Główne ***\n");
         System.out.println("Wybierz opcje podajac cyfrę z klawiatury:");
         System.out.println("[1] Przeglądaj bazę pojazdów do kupienia.");
@@ -29,13 +29,13 @@ public class Menus {
         return scanner.nextInt();
     }
 
-    public void inMarketMenu () {
-        System.out.println("Lista dostępnych aut \n");
+    public Integer inMarketMenu () {
+        System.out.println("Lista dostępnych aut: \n");
         // lista
         System.out.print("Który pojazd wybierasz? ");
         // todo opcja powrotu
         System.out.print("Twój wybór: ");
-        userInput = scanner.next();
+        return scanner.nextInt();
     }
 
     public void repairMenu () {

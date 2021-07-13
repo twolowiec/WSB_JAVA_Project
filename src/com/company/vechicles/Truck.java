@@ -11,14 +11,13 @@ public class Truck extends Vechicle {
 
     @Override
     public String toString() {
-        return "Samochód dostawczy{" +
-                "loadCapacity=" + loadCapacity +
-                ", producer='" + producer + '\'' +
-                ", model='" + model + '\'' +
-                ", value=" + value +
-                ", color='" + color + '\'' +
-                ", millage=" + millage +
-                ", needRepairs=" + needRepairs +
-                '}';
+        return "Samochód dostawczy:" + "\n" +
+                "\tMarka: " + producer + "\n" +
+                "\tModel: '" + model + "\n" +
+                "\tCena: " + value + "\n" +
+                "\tKolor: " + color + "\n" +
+                "\tPrzebieg: " + millage + "\n" +
+                "\tPrzestrzeń ładunkowa: " + loadCapacity + "\n" +
+                "\tCzy wymaga naprawy: " + needRepairs + "\n";
     }
 }
