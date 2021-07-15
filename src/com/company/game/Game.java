@@ -10,14 +10,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Game extends Menus {
-    public final Integer noOfPlayers;
-    public Boolean winingCondition = false;
-    public final Double startingCash;
-    public final Integer cashMultiplier;
-    public final Integer turnLimit;
+    final Integer noOfPlayers;
+    Boolean winingCondition = false;
+    final Double startingCash;
+    final Integer cashMultiplier;
+    final Integer turnLimit;
 //    Integer mainMenu = mainInGameMenu();
 //    Integer marketMenu = inMarketMenu();
-    public Integer turn = 1;
+    Integer turn = 1;
 
 
     public Game(Integer noPlayers, Double startingCash, Integer cashMultiplier, Integer turnLimit) throws InterruptedException {
@@ -101,7 +101,7 @@ public class Game extends Menus {
             mainInGameMenu();
             mainMenu = sc.nextInt();
 
-        } while (!winingCondition && mainMenu != 0 && isEndgameConditionMeet(turn));
+        } while (!winingCondition && mainMenu != 0 && isEndgameConditionMeet());
         if (isWiningConditionMeet(player)) {
             //todo przenieść całość do efektów
             Effects.clearConsole();
@@ -129,14 +129,14 @@ public class Game extends Menus {
 
     }
 
-    public Boolean isWiningConditionMeet(Player player) {
+    Boolean isWiningConditionMeet(Player player) {
         // todo uproscić
         if (this.startingCash * this.cashMultiplier < player.cash) {
             return this.winingCondition = true;
         } else return this.winingCondition = false;
     }
 
-    public Boolean isEndgameConditionMeet() {
+    Boolean isEndgameConditionMeet() {
         if (this.turnLimit == null)
             return false;
         else return this.turn < this.turnLimit;
