@@ -27,6 +27,10 @@ public class Player {
         return transactions;
     }
 
+    public Double getCash () {
+        return cash;
+    }
+
     @Override
     public String toString() {
         return "Player{" +

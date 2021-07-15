@@ -1,5 +1,6 @@
 package com.company.game;
 
+import com.company.Effects;
 import com.company.Main;
 import com.company.actors.Customer;
 import com.company.actors.Player;
@@ -10,65 +11,134 @@ import java.util.Scanner;
 
 public class Game extends Menus {
     public final Integer noOfPlayers;
-    public final Boolean winingCondition;
-    Integer mainMenu = mainInGameMenu();
-    Integer marketMenu = inMarketMenu();
-    public Integer turn = 0;
+    public Boolean winingCondition = false;
+    public final Double startingCash;
+    public final Integer cashMultiplier;
+    public final Integer turnLimit;
+//    Integer mainMenu = mainInGameMenu();
+//    Integer marketMenu = inMarketMenu();
+    public Integer turn = 1;
 
 
-    public Game(Integer noPlayers, Boolean winingCondition) {
+    public Game(Integer noPlayers, Double startingCash, Integer cashMultiplier, Integer turnLimit) throws InterruptedException {
         this.noOfPlayers = noPlayers;
-        this.winingCondition = winingCondition;
+        this.startingCash = startingCash;
+        this.cashMultiplier = cashMultiplier;
+        this.turnLimit = turnLimit;
+
         ArrayList<Customer> customers = new ArrayList<>();
 
-        turn++;
 
         Scanner sc = new Scanner(System.in);
         System.out.print("Graczu podaj swoje imie: ");
         String playerName = sc.next();
+        Player player = new Player(playerName, startingCash);
 
-        Player player = new Player(playerName, 50000.0);
+        Effects.clearConsole();
+        System.out.printf("Gracz: %s\t \t\tKasa: %.2f\t\t\t\tTura: %d\n\n\n", playerName, player.cash, turn);
+        mainInGameMenu();
+        int mainMenu = sc.nextInt();
+        do {
+            isWiningConditionMeet(player);
 
-//        System.out.println("Gracz: " + playerName + "\t\tKasa: "+ player.cash+"\t\tTura: "+turn);
-        while (!winingCondition || mainMenu == 0) {
-            System.out.println("Gracz: " + playerName + "\t\tKasa: " + player.cash + "\t\tTura: " + turn);
+
+//            System.out.println("Gracz: " + playerName + "\t\t\tKasa: " + player.cash + "\t\t\t\tTura: " + turn+"\n\n");
+
 
             switch (mainMenu) {
                 case 1: {
-                    switch (marketMenu) {
-                        case 0:
-                    }
+                    System.out.println("Wybrałeś 1");
+//                    Integer marketMenu = inMarketMenu();
+//                    switch (marketMenu) {
+//                        case 0:
+//                    }
                     break;
                 }
                 case 2: {
-                    player.getDealerCars().toString();
+                    System.out.println("Wybrałeś 2");
+//                    player.getDealerCars().toString();
                     break;
                 }
                 case 3: {
-                    customers.toString();
+                    System.out.println("Wybrałeś 3");
+//                    customers.toString();
                     break;
                 }
                 case 4: {
-                    System.out.println("Twój obecny stan konta to: " + player.cash);
+                    System.out.printf("Twój obecny stan konta to: %.2f\n", player.cash);
                     break;
                 }
                 case 5: {
-                    System.out.println("Historia transakcji: /n");
+                    System.out.println("Historia transakcji: \n");
                     player.getTransactions().toString();
                     break;
                 }
                 case 6: {
-
+                    System.out.println("Wybrałeś 6");
+                    break;
+                }
+                case 7: {
+                    System.out.println("Wybrałeś 7");
+                    player.cash += 100001.00;
+                    break;
+                }
+                case 8: {
+                    System.out.println("Wybrałeś 8");
+                    break;
+                }
+                case 9: {
+                    isWiningConditionMeet(player);
+                    this.turn++;
+                    System.out.println("Wybrałeś 9");
                     break;
                 }
                 default:
                     System.out.println("Prosze o wybór opcji z menu!");
             }
+            isWiningConditionMeet(player);
+            Effects.clearConsole();
+            System.out.printf("Gracz: %s\t \t\tKasa: %.2f\t\t\t\tTura: %d\n\n", playerName, player.cash, turn);
+            mainInGameMenu();
+            mainMenu = sc.nextInt();
 
+        } while (!winingCondition && mainMenu != 0 && isEndgameConditionMeet(turn));
+        if (isWiningConditionMeet(player)) {
+            //todo przenieść całość do efektów
+            Effects.clearConsole();
+            System.out.println("\n\n\n\n\n\n\n\n\n");
+            Effects.winner(playerName);
+            System.out.printf("Twój wynik to: %.2f\n\n\n", player.cash);
+            Effects.pressAnyKey();
+        } else if (isEndgameConditionMeet()){
+            //todo przenieść całość do efektów
+            // w przypadku gry na więcej niż 1 gracza dodatkowy warunek
+            Effects.clearConsole();
+            System.out.println("\n\n\n\n\n\n\n\n\n");
+            System.out.println("Mam nadzieję ze Ci się podobało " + playerName + " i zagrasz jeszcze nie raz.");
+            System.out.printf("Twój wynik to: %.2f\n\n\n", player.cash);
+            Effects.pressAnyKey();
+        } else {
+            //todo przenieść całość do efektów
+            Effects.clearConsole();
+            System.out.println("\n\n\n\n\n\n\n\n\n");
+            System.out.println("Mam nadzieję ze Ci się podobało " + playerName + " i zagrasz jeszcze nie raz.");
+            System.out.printf("Twój wynik to: %.2f\n\n\n", player.cash);
+            Effects.pressAnyKey();
         }
+
+
     }
 
-    public Boolean isWiningConditionMeet() {
-        return true;
+    public Boolean isWiningConditionMeet(Player player) {
+        // todo uproscić
+        if (this.startingCash * this.cashMultiplier < player.cash) {
+            return this.winingCondition = true;
+        } else return this.winingCondition = false;
+    }
+
+    public Boolean isEndgameConditionMeet() {
+        if (this.turnLimit == null)
+            return false;
+        else return this.turn < this.turnLimit;
     }
 }
