@@ -31,7 +31,7 @@ public class Game extends Menus {
 
         Scanner sc = new Scanner(System.in);
         System.out.print("Graczu podaj swoje imie: ");
-        String playerName = sc.next();
+        String playerName = sc.nextLine();
         Player player = new Player(playerName, startingCash);
 
         Effects.clearConsole();
@@ -39,7 +39,7 @@ public class Game extends Menus {
         mainInGameMenu();
         int mainMenu = sc.nextInt();
         do {
-            isWiningConditionMeet(player);
+//            isWiningConditionMeet(player);
 
 
 //            System.out.println("Gracz: " + playerName + "\t\t\tKasa: " + player.cash + "\t\t\t\tTura: " + turn+"\n\n");
@@ -97,48 +97,40 @@ public class Game extends Menus {
             }
             isWiningConditionMeet(player);
             Effects.clearConsole();
+            // Head bar
             System.out.printf("Gracz: %s\t \t\tKasa: %.2f\t\t\t\tTura: %d\n\n", playerName, player.cash, turn);
+            // repeat Main Menu in loop
             mainInGameMenu();
+            // read user input in loop
             mainMenu = sc.nextInt();
 
-        } while (!winingCondition && mainMenu != 0 && isEndgameConditionMeet());
-        if (isWiningConditionMeet(player)) {
-            //todo przenieść całość do efektów
-            Effects.clearConsole();
-            System.out.println("\n\n\n\n\n\n\n\n\n");
+            System.out.println(isWiningConditionMeet(player));
+            System.out.println(isLoseGameConditionMeet());
+        } while (isWiningConditionMeet(player) && mainMenu != 0 && isLoseGameConditionMeet());
+
+        if (!isWiningConditionMeet(player)) {
             Effects.winner(playerName);
-            System.out.printf("Twój wynik to: %.2f\n\n\n", player.cash);
-            Effects.pressAnyKey();
-        } else if (isEndgameConditionMeet()){
-            //todo przenieść całość do efektów
-            // w przypadku gry na więcej niż 1 gracza dodatkowy warunek
-            Effects.clearConsole();
-            System.out.println("\n\n\n\n\n\n\n\n\n");
-            System.out.println("Mam nadzieję ze Ci się podobało " + playerName + " i zagrasz jeszcze nie raz.");
-            System.out.printf("Twój wynik to: %.2f\n\n\n", player.cash);
-            Effects.pressAnyKey();
+        } else if (!isLoseGameConditionMeet()){
+            //todo w przypadku gry na więcej niż 1 gracza dodatkowy warunek
+            Effects.loser();
         } else {
-            //todo przenieść całość do efektów
             Effects.clearConsole();
             System.out.println("\n\n\n\n\n\n\n\n\n");
-            System.out.println("Mam nadzieję ze Ci się podobało " + playerName + " i zagrasz jeszcze nie raz.");
-            System.out.printf("Twój wynik to: %.2f\n\n\n", player.cash);
-            Effects.pressAnyKey();
+            System.out.println("Już nas opuszczasz " + playerName + "? Mam nadzieję ze Ci się podobało.");
         }
-
-
+        System.out.printf("Twój wynik to: %.2f\n\n\n", player.cash);
+        Effects.pressAnyKey();
     }
 
     Boolean isWiningConditionMeet(Player player) {
-        // todo uproscić
-        if (this.startingCash * this.cashMultiplier < player.cash) {
-            return this.winingCondition = true;
-        } else return this.winingCondition = false;
+        // When returns false - breaks the loop
+        return this.startingCash * this.cashMultiplier > player.cash;
     }
 
-    Boolean isEndgameConditionMeet() {
+    Boolean isLoseGameConditionMeet() {
+        // When returns false - breaks the loop
         if (this.turnLimit == null)
-            return false;
+            return true;
         else return this.turn < this.turnLimit;
     }
 }

@@ -21,12 +21,12 @@ public class Effects {
     }
 
     public static void winner(String playerName) throws InterruptedException {
-
+        Effects.clearConsole();
         String len = " ";
         for (int j = 0; j <= playerName.length(); j++) {
             len = len + "\b";
         }
-
+        System.out.println("\n\n\n\n\n\n\n\n\n");
         for (int i = 1; i <= 50; i++) {
             Thread.sleep(100);
             System.out.print(len + " " + playerName);
@@ -36,12 +36,8 @@ public class Effects {
         System.out.println("");
     }
 
-    public static void loser (String playerName) throws InterruptedException {
-        String len = " ";
-        for (int j = 0; j <= playerName.length(); j++) {
-            len = len + "\b";
-        }
-
+    public static void loser () throws InterruptedException {
+        Effects.clearConsole();
         for (int i = 1; i <= 10; i++) {
 //            Thread.sleep(100);
             System.out.print("\t\t\t\t\t\t\t YOU LOSE!!!");
@@ -57,7 +53,7 @@ public class Effects {
     }
 
     public static void pressAnyKey() {
-        System.out.println("Press Enter to continue");
+        System.out.println("\nPress Enter to continue");
         try{System.in.read();}
         catch(Exception e){}
     }
