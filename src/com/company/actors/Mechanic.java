@@ -1,7 +1,5 @@
 package com.company.actors;
 
-import com.company.game.Enum;
-
 public class Mechanic {
     String name; // Janusz / Marian / Adrian
     Integer repairEfficiency; // Janusz 100% / Marian 90% / Adrian 80%

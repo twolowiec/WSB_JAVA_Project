@@ -15,7 +15,7 @@ public class Game extends Menus {
     final Double startingCash;
     final Integer cashMultiplier;
     final Integer turnLimit;
-//    Integer mainMenu = mainInGameMenu();
+    //    Integer mainMenu = mainInGameMenu();
 //    Integer marketMenu = inMarketMenu();
     Integer turn = 1;
 
@@ -35,15 +35,13 @@ public class Game extends Menus {
         Player player = new Player(playerName, startingCash);
 
         Effects.clearConsole();
-        System.out.printf("Gracz: %s\t \t\tKasa: %.2f\t\t\t\tTura: %d\n\n\n", playerName, player.cash, turn);
+        // Head bar
+        System.out.printf("Gracz: %s\t \t\tKasa: %.2f\t\t\t\tTura: %d\n\n", playerName, player.cash, turn);
+        // repeat Main Menu in loop
         mainInGameMenu();
+        // read user input in loop
         int mainMenu = sc.nextInt();
         do {
-//            isWiningConditionMeet(player);
-
-
-//            System.out.println("Gracz: " + playerName + "\t\t\tKasa: " + player.cash + "\t\t\t\tTura: " + turn+"\n\n");
-
 
             switch (mainMenu) {
                 case 1: {
@@ -87,15 +85,14 @@ public class Game extends Menus {
                     break;
                 }
                 case 9: {
-                    isWiningConditionMeet(player);
+                    Effects.loading("nowej tury");
                     this.turn++;
-                    System.out.println("Wybrałeś 9");
                     break;
                 }
                 default:
                     System.out.println("Prosze o wybór opcji z menu!");
             }
-            isWiningConditionMeet(player);
+
             Effects.clearConsole();
             // Head bar
             System.out.printf("Gracz: %s\t \t\tKasa: %.2f\t\t\t\tTura: %d\n\n", playerName, player.cash, turn);
@@ -104,13 +101,12 @@ public class Game extends Menus {
             // read user input in loop
             mainMenu = sc.nextInt();
 
-            System.out.println(isWiningConditionMeet(player));
-            System.out.println(isLoseGameConditionMeet());
+
         } while (isWiningConditionMeet(player) && mainMenu != 0 && isLoseGameConditionMeet());
 
         if (!isWiningConditionMeet(player)) {
             Effects.winner(playerName);
-        } else if (!isLoseGameConditionMeet()){
+        } else if (!isLoseGameConditionMeet()) {
             //todo w przypadku gry na więcej niż 1 gracza dodatkowy warunek
             Effects.loser();
         } else {

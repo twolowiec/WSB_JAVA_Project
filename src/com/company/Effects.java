@@ -10,7 +10,7 @@ public class Effects {
         String text = "[Generowanie " + name + " zakończone!]";
         System.out.print("[");
         for (int i = 1; i <= text.length() - 2; i++) {
-            Thread.sleep(150);
+            Thread.sleep(50);
             System.out.print("#");
 //            Thread.sleep(150);
 //            System.out.print("\b#");
@@ -18,6 +18,7 @@ public class Effects {
         System.out.println("]");
         System.out.println(text);
         System.out.println("");
+        Thread.sleep(1500);
     }
 
     public static void winner(String playerName) throws InterruptedException {
