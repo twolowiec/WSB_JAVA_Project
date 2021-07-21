@@ -28,6 +28,10 @@ public class Game extends Menus {
 
         ArrayList<Customer> customers = new ArrayList<>();
 
+        for (int i = 0; i < 15; i++) {
+            customers.add(Generators.generateCustomer());
+        }
+
 
         Scanner sc = new Scanner(System.in);
         System.out.print("Graczu podaj swoje imie: ");
@@ -58,8 +62,13 @@ public class Game extends Menus {
                     break;
                 }
                 case 3: {
-                    System.out.println("Wybrałeś 3");
-//                    customers.toString();
+                    Effects.clearConsole();
+                    for (int i = 0; i < customers.size(); i++) {
+                        Customer.id = i+1;
+                        System.out.printf(customers.get(i).toString());
+                    }
+
+                    Effects.pressAnyKey();
                     break;
                 }
                 case 4: {

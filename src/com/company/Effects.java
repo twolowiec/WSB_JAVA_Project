@@ -65,7 +65,7 @@ public class Effects {
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
             }
             else {
-                System.out.print("\033\143");
+                System.out.print("\033\143\n");
             }
         } catch (IOException | InterruptedException ex) {}
     }

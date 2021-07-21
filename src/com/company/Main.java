@@ -3,6 +3,7 @@ package com.company;
 import com.company.Effects;
 import com.company.actors.Player;
 import com.company.game.Game;
+import com.company.game.Generators;
 import com.company.game.Menus;
 
 import java.util.Scanner;
@@ -11,7 +12,9 @@ import java.util.concurrent.Callable;
 public class Main {
 
     public static void main(String[] args) throws InterruptedException {
-        //TODO have no idea
+        Generators.generateVechicle();
+
+
         Effects.clearConsole();
         System.out.println("\tWitam Cię w symulatorze Autohandlu.\n");
         System.out.println("Twoim zadaniem będzie zarabiać na handlu autami.");
