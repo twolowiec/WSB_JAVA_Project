@@ -2,6 +2,7 @@ package com.company;
 
 import com.company.Effects;
 import com.company.actors.Player;
+import com.company.game.EnumData;
 import com.company.game.Game;
 import com.company.game.Generators;
 import com.company.game.Menus;
@@ -12,6 +13,10 @@ import java.util.concurrent.Callable;
 public class Main {
 
     public static void main(String[] args) throws InterruptedException {
+        for (EnumData.Parts part : EnumData.Parts.values()) {
+            System.out.println(part.namePL);
+        }
+
         Generators.generateVechicle();
 
 

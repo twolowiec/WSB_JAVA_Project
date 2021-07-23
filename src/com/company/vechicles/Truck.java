@@ -4,13 +4,15 @@ import com.company.game.EnumData;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 
 public class Truck extends Vechicle {
     Integer loadCapacity;
 
 
-    public Truck(String producer, Double value, String color, Double millage, Boolean needRepairs, ArrayList<EnumData.Parts> brokenParts, Integer loadCapacity) {
-        super(producer, value, color, millage, needRepairs, brokenParts);
+    public Truck(String producer, Double value, String color, Double millage, Boolean needRepairs, EnumData.Parts[] parts, Integer loadCapacity) {
+        super(producer, value, color, millage, needRepairs, parts);
         this.loadCapacity = loadCapacity;
     }
 
@@ -30,6 +32,8 @@ public class Truck extends Vechicle {
                 "\tKolor: " + color + "\n" +
                 "\tPrzebieg: " + millage + "\n" +
                 "\tPrzestrzeń ładunkowa: " + loadCapacity + "\n" +
-                "\tCzy wymaga naprawy: " + ((needRepairs) ? "Tak" : "Nie") + "\n";
+                "\tCzy wymaga naprawy: " + ((needRepairs) ? "Tak" : "Nie") + "\n" +
+                "\tCzęści do naprawy: " + ((needRepairs) ? Arrays.toString(this.parts) : "[]");
     }
+
 }

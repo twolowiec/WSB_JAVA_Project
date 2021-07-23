@@ -4,6 +4,7 @@ import com.company.game.EnumData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 
 public class Vechicle {
     String producer;
@@ -12,29 +13,29 @@ public class Vechicle {
     Double millage;
     Boolean needRepairs;
     EnumData.Parts[] parts;
-    ArrayList<EnumData.Parts> brokenParts = new ArrayList<EnumData.Parts>();
+//    static ArrayList<EnumData.Parts> brokenParts;
 
 
-    public Vechicle(String producer, Double value, String color, Double millage, Boolean needRepairs, ArrayList<EnumData.Parts> brokenParts) {
+    public Vechicle(String producer, Double value, String color, Double millage, Boolean needRepairs, EnumData.Parts[] parts) {
         this.producer = producer;
         this.value = value;
         this.color = color;
         this.millage = millage;
         this.needRepairs = needRepairs;
-        this.brokenParts = brokenParts;
+        this.parts = parts;
     }
 
-    public void setBrokenParts(EnumData.Parts part) {
-        this.brokenParts.add(part);
-    }
-
-//    public String getBrokenPartsPLNames() {
-//        StringBuilder partString = null;
-//        for (EnumData.Parts part : this.parts) {
-//            partString.append("\t\t").append(part.namePL).append("\n");
-//        }
-//        return partString.toString();
+//    public static void setBrokenParts(EnumData.Parts part) {
+//        brokenParts.add(part);
 //    }
+
+    public String getBrokenPartsPLNames() {
+        StringBuilder partString = null;
+        for (EnumData.Parts part : this.parts) {
+            partString.append("\t\t").append(part.namePL).append("\n");
+        }
+        return partString.toString();
+    }
 
     @Override
     public String toString() {
@@ -45,7 +46,6 @@ public class Vechicle {
                 ", millage=" + millage +
                 ", needRepairs=" + needRepairs +
                 ", parts=" + Arrays.toString(parts) +
-                ", brokenParts=" + brokenParts +
                 '}';
     }
 }

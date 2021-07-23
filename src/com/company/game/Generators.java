@@ -4,11 +4,12 @@ import com.company.actors.Customer;
 import com.company.vechicles.*;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.concurrent.ThreadLocalRandom;
 
 
 public class Generators {
-//    private static ArrayList<EnumData.Parts> parts;
+    //    private static ArrayList<EnumData.Parts> parts;
     Customer newCustomer;
     Car newCar;
     Truck newTruck;
@@ -57,45 +58,61 @@ public class Generators {
     public static Car generateCar(EnumData.VechicleBrands brand) {
         String producer = String.valueOf(brand);
         boolean broken = ThreadLocalRandom.current().nextBoolean();
-        ArrayList<EnumData.Parts> parts = new ArrayList<EnumData.Parts>();
+        EnumData.Parts[] parts = new EnumData.Parts[5];
+        int i = 0;
         if (broken) {
-            if (parts == null) {
-                for (EnumData.Parts part : parts) {
-                    if (ThreadLocalRandom.current().nextBoolean()) {
-                        parts.add(part);
-                    }
+            for (EnumData.Parts part : EnumData.Parts.values()) {
+                if (ThreadLocalRandom.current().nextBoolean()) {
+                    parts[i] = part;
+                    System.out.println(part);
+                    i++;
+
                 }
+                if (i == 5) break;
             }
         }
 
         String color = EnumData.Color.values()[ThreadLocalRandom.current().nextInt(0, EnumData.Color.values().length)].colorNamePL;
         String segment = brand.segment.displayName;
         double millage = Math.round(ThreadLocalRandom.current().nextDouble(500.0, 4000.0) * 1000.0) / 10.0;
-
-        double price = brand.mediumPricePersonal; // zrobić warunek jeżeli do naprawy to cena do -3/4 jeżeli nie to do + 3/4
-
-        Car newCar = new Car(producer, price, color, millage, broken, parts, segment);
+        double price = brand.mediumPricePersonal;
+        double value;
+        if (broken) {
+            value = price - price * (millage / 100000) / 6; // zrobić warunek jeżeli do naprawy to cena do -3/4 jeżeli nie to do + 3/4
+        } else {
+            value = price - price * (millage / 100000) / 6 + ThreadLocalRandom.current().nextDouble(0, brand.mediumPricePersonal / 4);
+        }
+        Car newCar = new Car(producer, value, color, millage, broken, parts, segment);
         return newCar;
     }
 
     public static Truck generateTruck(EnumData.VechicleBrands brand) {
         String producer = String.valueOf(brand);
         boolean broken = ThreadLocalRandom.current().nextBoolean();
-        ArrayList<EnumData.Parts> parts = new ArrayList<EnumData.Parts>();
+        EnumData.Parts[] parts = new EnumData.Parts[5];
+        int i = 0;
         if (broken) {
-            if (parts == null) {
-                for (EnumData.Parts part : parts) {
+            while (parts == null) {
+                for (EnumData.Parts part : EnumData.Parts.values()) {
                     if (ThreadLocalRandom.current().nextBoolean()) {
-                        parts.add(part);
+                        parts[i] = (part);
+                        System.out.println(part);
+                        i++;
                     }
                 }
             }
         }
         String color = EnumData.Color.values()[ThreadLocalRandom.current().nextInt(0, EnumData.Color.values().length)].colorNamePL;
         double millage = Math.round(ThreadLocalRandom.current().nextDouble(500.0, 4000.0) * 1000.0) / 10.0;
-        int capacity = brand.cargoCapacity;
-        double price = brand.mediumPricePersonal; // zrobić warunek jeżeli do naprawy to cena do -3/4 jeżeli nie to do + 3/4
-        Truck newTruck = new Truck(producer, price, color, millage, broken, parts, capacity);
+        Integer capacity = brand.cargoCapacity;
+        double price = brand.mediumPricePersonal;
+        double value;
+        if (broken) {
+            value = price - price * (millage / 100000) / 8;
+        } else {
+            value = price - price * (millage / 100000) / 6 + ThreadLocalRandom.current().nextDouble(0, brand.mediumPricePersonal / 4);
+        }
+        Truck newTruck = new Truck(producer, value, color, millage, broken, parts, capacity);
         return newTruck;
     }
 
