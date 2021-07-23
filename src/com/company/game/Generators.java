@@ -40,17 +40,14 @@ public class Generators {
         return newCustomer;
     }
 
-    public static void generateVechicle() {
-//    public Vechicle generateVechicle() {
+    public static Vechicle generateVechicle() {
         EnumData.VechicleBrands brands = null;
         EnumData.VechicleType type = EnumData.VechicleType.values()[ThreadLocalRandom.current().nextInt(0, EnumData.VechicleType.values().length)];
         EnumData.VechicleBrands brand = EnumData.VechicleBrands.values()[ThreadLocalRandom.current().nextInt(0, EnumData.VechicleBrands.values().length)];
         if (brand.isCargo && type == EnumData.VechicleType.TRUCK) {
-            generateTruck(brand);
-            System.out.println(generateTruck(brand).toString());
+            return generateTruck(brand);
         } else {
-            generateCar(brand);
-            System.out.println(generateCar(brand).toString());
+            return generateCar(brand);
         }
     }
 
@@ -58,15 +55,15 @@ public class Generators {
     public static Car generateCar(EnumData.VechicleBrands brand) {
         String producer = String.valueOf(brand);
         boolean broken = ThreadLocalRandom.current().nextBoolean();
-        EnumData.Parts[] parts = new EnumData.Parts[5];
-        int i = 0;
-        if (broken) {
+//        EnumData.Parts[] parts = new EnumData.Parts[5];
+        ArrayList<EnumData.Parts> brokenParts = new ArrayList<EnumData.Parts>();
+
+        if (broken == true) {
+            int i = 0;
             for (EnumData.Parts part : EnumData.Parts.values()) {
                 if (ThreadLocalRandom.current().nextBoolean()) {
-                    parts[i] = part;
-                    System.out.println(part);
+                    brokenParts.add(part);
                     i++;
-
                 }
                 if (i == 5) break;
             }
@@ -77,29 +74,30 @@ public class Generators {
         double millage = Math.round(ThreadLocalRandom.current().nextDouble(500.0, 4000.0) * 1000.0) / 10.0;
         double price = brand.mediumPricePersonal;
         double value;
-        if (broken) {
-            value = price - price * (millage / 100000) / 6; // zrobić warunek jeżeli do naprawy to cena do -3/4 jeżeli nie to do + 3/4
+        if (broken == true) {
+            value = price - (price * (millage / 100000) / 8) - (price * (3 * brokenParts.size()/20)); // zrobić warunek jeżeli do naprawy to cena do -3/4 jeżeli nie to do + 3/4
         } else {
             value = price - price * (millage / 100000) / 6 + ThreadLocalRandom.current().nextDouble(0, brand.mediumPricePersonal / 4);
         }
-        Car newCar = new Car(producer, value, color, millage, broken, parts, segment);
+        if (color == EnumData.Color.RED.colorNamePL) value *= 1.1; // bo czerwony szybszy xD
+        Car newCar = new Car(producer, value, color, millage, broken, brokenParts, segment);
         return newCar;
     }
 
     public static Truck generateTruck(EnumData.VechicleBrands brand) {
         String producer = String.valueOf(brand);
         boolean broken = ThreadLocalRandom.current().nextBoolean();
-        EnumData.Parts[] parts = new EnumData.Parts[5];
-        int i = 0;
-        if (broken) {
-            while (parts == null) {
-                for (EnumData.Parts part : EnumData.Parts.values()) {
-                    if (ThreadLocalRandom.current().nextBoolean()) {
-                        parts[i] = (part);
-                        System.out.println(part);
-                        i++;
-                    }
+
+        ArrayList<EnumData.Parts> brokenParts = new ArrayList<EnumData.Parts>();
+
+        if (broken == true) {
+            int i = 0;
+            for (EnumData.Parts part : EnumData.Parts.values()) {
+                if (ThreadLocalRandom.current().nextBoolean()) {
+                    brokenParts.add(part);
+                    i++;
                 }
+                if (i == 5) break;
             }
         }
         String color = EnumData.Color.values()[ThreadLocalRandom.current().nextInt(0, EnumData.Color.values().length)].colorNamePL;
@@ -107,20 +105,20 @@ public class Generators {
         Integer capacity = brand.cargoCapacity;
         double price = brand.mediumPricePersonal;
         double value;
-        if (broken) {
-            value = price - price * (millage / 100000) / 8;
+        if (broken == true) {
+            value = price - (price * (millage / 100000) / 8) - (price * (3 * brokenParts.size()/20));
         } else {
             value = price - price * (millage / 100000) / 6 + ThreadLocalRandom.current().nextDouble(0, brand.mediumPricePersonal / 4);
         }
-        Truck newTruck = new Truck(producer, value, color, millage, broken, parts, capacity);
+        Truck newTruck = new Truck(producer, value, color, millage, broken, brokenParts, capacity);
         return newTruck;
     }
 
-    public Boolean needRepairs() {
-        return ThreadLocalRandom.current().nextBoolean();
-    }
-
-    public EnumData.Parts brokenParts() {
-        return EnumData.Parts.values()[ThreadLocalRandom.current().nextInt(0, EnumData.Parts.values().length)];
-    }
+//    public Boolean needRepairs() {
+//        return ThreadLocalRandom.current().nextBoolean();
+//    }
+//
+//    public EnumData.Parts brokenParts() {
+//        return EnumData.Parts.values()[ThreadLocalRandom.current().nextInt(0, EnumData.Parts.values().length)];
+//    }
 }

@@ -40,7 +40,7 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "\nKlient: " + id + "\n" +
+        return "\nKlient: " + "[" + id + "]\n" +
                 "\tImię: " + firstName + '\n' +
                 "\tNazwisko: " + lastName + '\n' +
                 "\tPożądane marki" + Arrays.toString(brandPreference) + '\n' +

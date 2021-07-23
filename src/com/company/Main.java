@@ -20,6 +20,7 @@ public class Main {
         Generators.generateVechicle();
 
 
+
         Effects.clearConsole();
         System.out.println("\tWitam Cię w symulatorze Autohandlu.\n");
         System.out.println("Twoim zadaniem będzie zarabiać na handlu autami.");

@@ -4,10 +4,15 @@ import com.company.Effects;
 import com.company.Main;
 import com.company.actors.Customer;
 import com.company.actors.Player;
+import com.company.vechicles.Car;
+import com.company.vechicles.Truck;
+import com.company.vechicles.Vechicle;
 
 import javax.swing.text.StyledEditorKit;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import static com.company.game.Generators.*;
 
 public class Game extends Menus {
     final Integer noOfPlayers;
@@ -28,8 +33,14 @@ public class Game extends Menus {
 
         ArrayList<Customer> customers = new ArrayList<>();
 
-        for (int i = 0; i < 15; i++) {
-            customers.add(Generators.generateCustomer());
+        for (int i = 0; i < 10; i++) {
+            customers.add(generateCustomer());
+        }
+
+        ArrayList<Vechicle> marketVechicles = new ArrayList<>();
+
+        for (int i = 0; i < 30; i++) {
+            marketVechicles.add(generateVechicle());
         }
 
 
@@ -49,11 +60,11 @@ public class Game extends Menus {
 
             switch (mainMenu) {
                 case 1: {
-                    System.out.println("Wybrałeś 1");
-//                    Integer marketMenu = inMarketMenu();
-//                    switch (marketMenu) {
-//                        case 0:
-//                    }
+                    Effects.clearConsole();
+                    for (int i = 0; i < marketVechicles.size(); i++) {
+                        Vechicle.id = i+1;
+                        System.out.printf(marketVechicles.get(i).toString());
+                    }
                     break;
                 }
                 case 2: {
