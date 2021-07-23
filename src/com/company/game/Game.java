@@ -65,6 +65,8 @@ public class Game extends Menus {
                         Vechicle.id = i+1;
                         System.out.printf(marketVechicles.get(i).toString());
                     }
+
+                    Effects.pressAnyKey();
                     break;
                 }
                 case 2: {
@@ -79,7 +81,7 @@ public class Game extends Menus {
                         System.out.printf(customers.get(i).toString());
                     }
 
-                    Effects.pressAnyKey();
+
                     break;
                 }
                 case 4: {
