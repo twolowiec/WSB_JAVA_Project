@@ -33,7 +33,7 @@ public class Truck extends Vechicle {
                 "\tMarka: " + producer + "\n" +
                 "\tCena: " + NumberFormat.getCurrencyInstance().format(value) + "\n" +
                 "\tKolor: " + color + "\n" +
-                "\tPrzebieg: " + millage + "\n" +
+                "\tPrzebieg: " + millage + " km\n" +
                 "\tPrzestrzeń ładunkowa: " + loadCapacity + "\n" +
                 "\tCzy wymaga naprawy: " + ((needRepairs) ? "Tak" : "Nie") + "\n" +
                 ((needRepairs) ? "\tCzęści do naprawy: \n" : "") +

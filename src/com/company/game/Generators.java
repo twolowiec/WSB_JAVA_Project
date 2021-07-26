@@ -4,7 +4,6 @@ import com.company.actors.Customer;
 import com.company.vechicles.*;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.concurrent.ThreadLocalRandom;
 
 
@@ -114,11 +113,4 @@ public class Generators {
         return newTruck;
     }
 
-//    public Boolean needRepairs() {
-//        return ThreadLocalRandom.current().nextBoolean();
-//    }
-//
-//    public EnumData.Parts brokenParts() {
-//        return EnumData.Parts.values()[ThreadLocalRandom.current().nextInt(0, EnumData.Parts.values().length)];
-//    }
 }

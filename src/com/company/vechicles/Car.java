@@ -35,7 +35,7 @@ public class Car extends Vechicle {
                 "\tCena: " + NumberFormat.getCurrencyInstance().format(value) + '\n' +
                 "\tSegment: " + segment + '\n' +
                 "\tKolor: " + color + '\n' +
-                "\tPrzebieg: " + millage + '\n' +
+                "\tPrzebieg: " + millage + " km\n" +
                 "\tCzy wymaga naprawy: " + ((needRepairs) ? "Tak" : "Nie") + "\n" +
                 ((needRepairs) ? "\tCzęści do naprawy: \n" : "") +
                 bParts +

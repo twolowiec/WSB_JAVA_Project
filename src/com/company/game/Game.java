@@ -1,21 +1,19 @@
 package com.company.game;
 
 import com.company.Effects;
-import com.company.Main;
 import com.company.actors.Customer;
 import com.company.actors.Player;
-import com.company.vechicles.Car;
-import com.company.vechicles.Truck;
 import com.company.vechicles.Vechicle;
 
-import javax.swing.text.StyledEditorKit;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
 
-import static com.company.game.Generators.*;
+import static com.company.game.Generators.generateCustomer;
+import static com.company.game.Generators.generateVechicle;
 
 public class Game extends Menus {
-    final Integer noOfPlayers;
+    Integer noOfPlayers;
     Boolean winingCondition = false;
     final Double startingCash;
     final Integer cashMultiplier;
@@ -23,6 +21,7 @@ public class Game extends Menus {
     //    Integer mainMenu = mainInGameMenu();
 //    Integer marketMenu = inMarketMenu();
     Integer turn = 1;
+    boolean onceATurn = false;
 
 
     public Game(Integer noPlayers, Double startingCash, Integer cashMultiplier, Integer turnLimit) throws InterruptedException {
@@ -36,10 +35,10 @@ public class Game extends Menus {
         for (int i = 0; i < 10; i++) {
             customers.add(generateCustomer());
         }
-
+        // TODO przenieśc do marketu
         ArrayList<Vechicle> marketVechicles = new ArrayList<>();
 
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 15; i++) {
             marketVechicles.add(generateVechicle());
         }
 
@@ -62,26 +61,45 @@ public class Game extends Menus {
                 case 1: {
                     Effects.clearConsole();
                     for (int i = 0; i < marketVechicles.size(); i++) {
-                        Vechicle.id = i+1;
+                        Vechicle.id = i + 1;
                         System.out.printf(marketVechicles.get(i).toString());
                     }
 
-                    Effects.pressAnyKey();
+                    if (onceATurn == true) {
+                        System.out.println("Nie możesz już w tej turze wykonać zakupu samochodu.");
+                        Effects.pressAnyKey();
+                    } else {
+                        System.out.println("Podaj 0 aby powrócić do menu.");
+                        System.out.println("Lub wybierz ID samochodu który chcesz zakupić.");
+
+                        System.out.print("Twój wybór: ");
+                        int chooseMarketCar = sc.nextInt();
+                        if (chooseMarketCar == 0) {
+                            break;
+                        } else {
+                            player.buyMarketVechicle(marketVechicles.get(chooseMarketCar - 1));
+                        }
+//                        if () {
+//
+//                        } else if (chooseMarketCar == 0) {
+//
+//                        } else System.out.println("Ten wybór jest niedozwolony");
+                    }
+
+
                     break;
                 }
                 case 2: {
                     System.out.println("Wybrałeś 2");
-//                    player.getDealerCars().toString();
+                    player.getDealerCars().toString();
                     break;
                 }
                 case 3: {
                     Effects.clearConsole();
                     for (int i = 0; i < customers.size(); i++) {
-                        Customer.id = i+1;
+                        Customer.id = i + 1;
                         System.out.printf(customers.get(i).toString());
                     }
-
-
                     break;
                 }
                 case 4: {
@@ -109,6 +127,12 @@ public class Game extends Menus {
                 case 9: {
                     Effects.loading("nowej tury");
                     this.turn++;
+                    this.onceATurn = false;
+                    int i = 0;
+                    for (; i < (ThreadLocalRandom.current().nextInt(1, 3)); i++) {
+                        marketVechicles.add(generateVechicle());
+                    }
+                    System.out.println("Na rynku pojawiły się " + i + " nowe pojazdy.");
                     break;
                 }
                 default:

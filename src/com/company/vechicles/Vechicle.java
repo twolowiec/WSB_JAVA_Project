@@ -7,13 +7,14 @@ import java.util.Arrays;
 
 public class Vechicle {
     public static int id;
-    String producer;
+    public String producer;
     Double value;
     String color;
     Double millage;
     Boolean needRepairs;
-//    EnumData.Parts[] parts;
+    //    EnumData.Parts[] parts;
     ArrayList<EnumData.Parts> brokenParts;
+
 
 
     public Vechicle(String producer, Double value, String color, Double millage, Boolean needRepairs, ArrayList<EnumData.Parts> brokenParts) {
@@ -23,6 +24,21 @@ public class Vechicle {
         this.millage = millage;
         this.needRepairs = needRepairs;
         this.brokenParts = brokenParts;
+    }
+
+    public Double getValue() {
+        return this.value;
+    }
+
+    public Integer conditionValue () {
+        int condition = 0;
+        if (brokenParts.size() == 0)
+            condition = EnumData.CustomerVechicleCondition.OPERATIONAL.buyingVillingness;
+        else if (brokenParts.contains(EnumData.Parts.SUSPENSION) && brokenParts.size() == 1)
+            condition = EnumData.CustomerVechicleCondition.FAULTYSUSPENSION.buyingVillingness;
+        else
+            condition = EnumData.CustomerVechicleCondition.BROKEN.buyingVillingness;
+        return condition;
     }
 
 //    public static void setBrokenParts(EnumData.Parts part) {
@@ -39,14 +55,12 @@ public class Vechicle {
 
     @Override
     public String toString() {
-        return "Vechicle{" +
-                "producer='" + producer + '\'' +
-                ", value=" + value +
-                ", color='" + color + '\'' +
-                ", millage=" + millage +
+        return "Marka: " + producer + ", " +
+                "Wartość: " + value + ", " +
+                "Kolor: " + color + ", " +
+                "Przebieg: " + millage + ", " +
                 ", needRepairs=" + needRepairs +
-                ", parts=" + brokenParts.toArray().toString() +
-                '}';
+                ", parts=" + brokenParts.toArray().toString();
     }
 }
 

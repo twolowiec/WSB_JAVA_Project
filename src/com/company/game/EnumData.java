@@ -110,6 +110,7 @@ public class EnumData {
         PORSCHE (true, false, false,312500.0, null,CarSegment.PREMIUM, null, 1.8),
         RENAULT(true, false, true,35500.0,46750.0,CarSegment.STANDARD,1257,1.15),
 //        ROVER (true, false, false),
+//        SAAB (true, false, false)
         SEAT(true, false, false,35000.0,null,CarSegment.STANDARD,null,0.9),
         SKODA(true,false,true,31750.0,27450.0,CarSegment.BUDGET,560,0.8),
 //        SUBARU(true, false, false),
@@ -175,18 +176,18 @@ public class EnumData {
         }
     }
 
-    public enum accountOperations {
+    public enum AccountOperations {
         INCOME("Uznanie"),
         OUTCOME("Obciążenie");
 
-        String operatoinNamePL;
+        String operationNamePL;
 
-        accountOperations(String operatoinName) {
-            this.operatoinNamePL = operatoinName;
+        AccountOperations(String operatoinName) {
+            this.operationNamePL = operatoinName;
         }
     }
 
-    public enum vechicleHistory {
+    public enum VechicleHistory {
         BUY("Zakup"),
         SELL("Sprzedaż"),
         DETAILING("Mycie pojazdu"),
@@ -195,8 +196,37 @@ public class EnumData {
 
         String namePL;
 
-        vechicleHistory(String namePL) {
+        VechicleHistory(String namePL) {
             this.namePL = namePL;
+        }
+    }
+
+    public enum Costs {
+        ADVIERTISEMENT("Wydatek na reklamę"),
+        BUY("Zakup"),
+        SELL("Sprzedaż"),
+        DETAILING("Mycie pojazdu"),
+        REPAIR("Naprawa pojazdu"),
+        TAX("Podatek");
+
+        String namePL;
+
+        Costs(String namePL) {
+            this.namePL = namePL;
+        }
+    }
+
+    public enum Advertisement {
+        NEWSPAPER("Gazeta", 4500),
+        INTERNET("Internet", 1500);
+
+        public String namePL;
+        public Integer cost;
+
+        Advertisement(String namePL, Integer cost) {
+            this.namePL = namePL;
+            this.cost = cost;
+
         }
     }
 }
