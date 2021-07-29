@@ -3,7 +3,7 @@ package com.company.vechicles;
 import com.company.game.EnumData;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Scanner;
 
 public class Vechicle {
     public static int id;
@@ -14,7 +14,6 @@ public class Vechicle {
     Boolean needRepairs;
     //    EnumData.Parts[] parts;
     ArrayList<EnumData.Parts> brokenParts;
-
 
 
     public Vechicle(String producer, Double value, String color, Double millage, Boolean needRepairs, ArrayList<EnumData.Parts> brokenParts) {
@@ -30,7 +29,7 @@ public class Vechicle {
         return this.value;
     }
 
-    public Integer conditionValue () {
+    public Integer conditionValue() {
         int condition = 0;
         if (brokenParts.size() == 0)
             condition = EnumData.CustomerVechicleCondition.OPERATIONAL.buyingVillingness;
@@ -39,6 +38,33 @@ public class Vechicle {
         else
             condition = EnumData.CustomerVechicleCondition.BROKEN.buyingVillingness;
         return condition;
+    }
+
+    public void setMarkup() {
+        System.out.println("Ustaw marże na wartości pojazdu.");
+        System.out.println("[1] 0%");
+        System.out.println("[2] 5%");
+        System.out.println("[3] 10%");
+        System.out.print("Twój wybór:");
+        Scanner margin = new Scanner(System.in);
+
+        switch (margin.nextInt()) {
+            case 1:
+                this.value *= 1.00;
+                System.out.println("Wybrałeś 0% marży.");
+                break;
+            case 2:
+                this.value *= 1.05;
+                System.out.println("Wybrałeś 5% marży.");
+                break;
+            case 3:
+                this.value *= 1.1;
+                System.out.println("Wybrałeś 10% marży.");
+                break;
+            default:
+                System.out.println("Niedozwolony wybór!");
+        }
+        System.out.println("Nowa cena to: " + this.value);
     }
 
 //    public static void setBrokenParts(EnumData.Parts part) {

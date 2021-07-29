@@ -12,12 +12,12 @@ public class Customer {
     public Double money;
     EnumData.VechicleType vechicleType;
     int vechicleCondition;
-    int desiredCapacity;
+    Integer desiredCapacity;
     // do wyświetlania za pomocą toString() Id klienta na liście
     public static int id;
 
 
-    public Customer(String firstName, String lastName, EnumData.VechicleBrands[] brandPreference, Double money, EnumData.VechicleType vechicleType, int vechicleCondition, int desiredCapacity) {
+    public Customer(String firstName, String lastName, EnumData.VechicleBrands[] brandPreference, Double money, EnumData.VechicleType vechicleType, int vechicleCondition, Integer desiredCapacity) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.brandPreference = brandPreference;
@@ -35,8 +35,9 @@ public class Customer {
         } else {
             return "Akceptuje tylko sprawne pojazdy";
         }
-
     }
+
+    // można by zrobić metode która pokazywała by tylko poządane pojazdy - jeśli bedzie czas.
 
     @Override
     public String toString() {
@@ -46,8 +47,8 @@ public class Customer {
                 "\tPożądane marki" + Arrays.toString(brandPreference) + '\n' +
                 "\tPosiadana gotówka: " + NumberFormat.getCurrencyInstance().format(money) + '\n' +
                 "\tTyp pojazdu: " + ((vechicleType == EnumData.VechicleType.CAR) ? "Osobowy" : "Dostawczy") + '\n' +
-                "\tDopuszczalny stan: " + acceptableState(vechicleCondition) +
                 ((vechicleType == EnumData.VechicleType.TRUCK) ? "\tOczekiwana ładowność: " + desiredCapacity : "") +
+                "\n\tDopuszczalny stan: " + acceptableState(vechicleCondition) +
                 "\n------------------------------------------------------------";
     }
 

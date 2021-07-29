@@ -12,12 +12,14 @@ public class Player {
     public String name;
     public Double cash;
 
-    ArrayList<Vechicle> dealerCars = new ArrayList<>();
-    ArrayList<Transaction> transactions = new ArrayList<>();
+    ArrayList<Vechicle> dealerCars;
+    ArrayList<Transaction> transactions;
 
     public Player(String name, Double cash) {
         this.name = name;
         this.cash = cash;
+        this.dealerCars = new ArrayList<>();
+        this.transactions = new ArrayList<>();
     }
 
     public ArrayList<Vechicle> getDealerCars() {
@@ -35,11 +37,14 @@ public class Player {
             this.dealerCars.add(vechicle);
             // TODO zdjąć pojazd z marketu i dodac nowy (przenieść market do klasy)
             this.cash -= vechicle.getValue();
+
             // TODO add to transactions
             System.out.println("Zakupiłeś nastepujący pojazd: \n" + vechicle.toString());
             payTax(vechicle);
         }
     }
+
+
 
     public void sellVechicle(Vechicle vechicle, Customer customer) throws Exception {
         if (customer.money < vechicle.getValue()) {

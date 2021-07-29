@@ -1,6 +1,5 @@
 package com.company.game;
 
-import java.util.Random;
 import java.util.Scanner;
 
 public class Menus {
@@ -8,14 +7,14 @@ public class Menus {
     Scanner scanner = new Scanner(System.in);
     static Scanner scannerStartMenu = new Scanner(System.in);
     static Scanner scannerDifficultyMenu = new Scanner(System.in);
-    Boolean onceForATurn = false;
+//    Boolean onceForATurn = false;
 
-    public void mainInGameMenu() {
+    public void mainInGameMenu(boolean onceForATurn) {
         System.out.println("\t *** Menu Główne ***\n");
         if (onceForATurn) {
             System.out.println("Wybierz opcje podajac cyfrę z klawiatury:");
             System.out.println("[1] Przeglądaj bazę pojazdów do kupienia.");
-            System.out.println("[2] Przeglądaj bazę posiadanych pojazdów (przegląd placu).");
+            System.out.println("[2] Przeglądaj bazę posiadanych pojazdów (+ historia pojazdów i naprawy).");
             System.out.println("[3] Przeglądaj bazę potencjalnych klientów.");
             System.out.println("[4] Informacje o koncie.");
             System.out.println("[6] Przeglądaj historie transakcji.");
@@ -38,20 +37,9 @@ public class Menus {
             System.out.println("[9] Zakończ turę.");
             System.out.println("[0] Opuść grę.");
             System.out.print("Twój wybór: ");
-//            return scanner.nextInt();
         }
-
     }
 
-    public int inMarketMenu () {
-        System.out.println("Lista dostępnych aut: \n");
-
-        System.out.print("Podaj ID pojazdu który chces zakupić. ");
-        // lista
-        // todo opcja powrotu
-        System.out.print("Twój wybór: ");
-        return scanner.nextInt();
-    }
 
     public int repairMenu () {
         System.out.print("Który pojazd chcesz naprawić? ");
@@ -71,13 +59,12 @@ public class Menus {
         return scanner.nextInt();
     }
 
-    public int advertisementMenu () {
+    public void advertisementMenu () {
         System.out.println("Gdzie chcesz dać ogłoszenie?");
         System.out.println("[1] Gazeta: 4500 - kilku nowych klientów(2-4).");
         System.out.println("[2] Internet: 1500 - tylko jeden nowy klient.");
         System.out.println("[8] Powrót do głownego menu.");
         System.out.print("Twój wybór: ");
-        return scanner.nextInt();
     }
 
     public static int startMenu() {

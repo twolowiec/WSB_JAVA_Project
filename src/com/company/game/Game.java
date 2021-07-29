@@ -21,7 +21,7 @@ public class Game extends Menus {
     //    Integer mainMenu = mainInGameMenu();
 //    Integer marketMenu = inMarketMenu();
     Integer turn = 1;
-    boolean onceATurn = false;
+    Boolean onceATurn = false;
 
 
     public Game(Integer noPlayers, Double startingCash, Integer cashMultiplier, Integer turnLimit) throws InterruptedException {
@@ -36,10 +36,10 @@ public class Game extends Menus {
             customers.add(generateCustomer());
         }
         // TODO przenieśc do marketu
-        ArrayList<Vechicle> marketVechicles = new ArrayList<>();
+        Market market = new Market();
 
         for (int i = 0; i < 15; i++) {
-            marketVechicles.add(generateVechicle());
+            market.setMarketVechicles(generateVechicle());
         }
 
 
@@ -52,7 +52,7 @@ public class Game extends Menus {
         // Head bar
         System.out.printf("Gracz: %s\t \t\tKasa: %.2f\t\t\t\tTura: %d\n\n", playerName, player.cash, turn);
         // repeat Main Menu in loop
-        mainInGameMenu();
+        mainInGameMenu(onceATurn);
         // read user input in loop
         int mainMenu = sc.nextInt();
         do {
@@ -60,9 +60,9 @@ public class Game extends Menus {
             switch (mainMenu) {
                 case 1: {
                     Effects.clearConsole();
-                    for (int i = 0; i < marketVechicles.size(); i++) {
+                    for (int i = 0; i < market.marketVechicles.size(); i++) {
                         Vechicle.id = i + 1;
-                        System.out.printf(marketVechicles.get(i).toString());
+                        System.out.printf(market.marketVechicles.get(i).toString());
                     }
 
                     if (onceATurn == true) {
@@ -77,7 +77,9 @@ public class Game extends Menus {
                         if (chooseMarketCar == 0) {
                             break;
                         } else {
-                            player.buyMarketVechicle(marketVechicles.get(chooseMarketCar - 1));
+                            player.buyMarketVechicle(market.marketVechicles.get(chooseMarketCar - 1));
+                            market.marketVechicles.remove(chooseMarketCar - 1);
+                            onceATurn = true;
                         }
 //                        if () {
 //
@@ -90,8 +92,11 @@ public class Game extends Menus {
                     break;
                 }
                 case 2: {
-                    System.out.println("Wybrałeś 2");
-                    player.getDealerCars().toString();
+                    Effects.clearConsole();
+                    for (int i = 0; i < player.getDealerCars().size(); i++) {
+                        Vechicle.id = i + 1;
+                        System.out.println(player.getDealerCars().get(i).toString());
+                    }
                     break;
                 }
                 case 3: {
@@ -100,6 +105,9 @@ public class Game extends Menus {
                         Customer.id = i + 1;
                         System.out.printf(customers.get(i).toString());
                     }
+                    // TODO dodać tutaj sprzedaż z warunkiem i marżą
+
+                    Effects.pressAnyKey();
                     break;
                 }
                 case 4: {
@@ -107,12 +115,27 @@ public class Game extends Menus {
                     break;
                 }
                 case 5: {
-                    System.out.println("Historia transakcji: \n");
-                    player.getTransactions().toString();
+                    Effects.clearConsole();
+                    if (onceATurn) {
+                        System.out.println("Już kupiłeś reklamę w tej turze!");
+                        Effects.pressAnyKey();
+                        break;
+                    }
+                    advertisementMenu();
+                    int adChoice = sc.nextInt();
+                    if (adChoice == 8)
+                        break;
+                    else {
+                        int newCustomers = player.buyAd(EnumData.Advertisement.values()[adChoice - 1]);
+                        for (int i = 0; i < newCustomers; i++) customers.add(generateCustomer());
+                        Effects.pressAnyKey();
+                        onceATurn = true;
+                    }
                     break;
                 }
                 case 6: {
                     System.out.println("Wybrałeś 6");
+                    player.getTransactions().toString();
                     break;
                 }
                 case 7: {
@@ -125,14 +148,15 @@ public class Game extends Menus {
                     break;
                 }
                 case 9: {
-                    Effects.loading("nowej tury");
                     this.turn++;
                     this.onceATurn = false;
                     int i = 0;
                     for (; i < (ThreadLocalRandom.current().nextInt(1, 3)); i++) {
-                        marketVechicles.add(generateVechicle());
+                        market.marketVechicles.add(generateVechicle());
                     }
                     System.out.println("Na rynku pojawiły się " + i + " nowe pojazdy.");
+                    // może to w jakiś komunikat zapiąć/zebrać
+                    Effects.loading("nowej tury");
                     break;
                 }
                 default:
@@ -143,7 +167,7 @@ public class Game extends Menus {
             // Head bar
             System.out.printf("Gracz: %s\t \t\tKasa: %.2f\t\t\t\tTura: %d\n\n", playerName, player.cash, turn);
             // repeat Main Menu in loop
-            mainInGameMenu();
+            mainInGameMenu(onceATurn);
             // read user input in loop
             mainMenu = sc.nextInt();
 

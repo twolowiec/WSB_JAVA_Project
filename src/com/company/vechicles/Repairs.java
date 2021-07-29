@@ -1,4 +1,4 @@
 package com.company.vechicles;
 
-public class Parts {
+public class Repairs {
 }

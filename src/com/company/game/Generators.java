@@ -25,14 +25,23 @@ public class Generators {
         String lastName = String.valueOf(EnumData.LastNames.values()[ThreadLocalRandom.current().nextInt(0, EnumData.LastNames.values().length)]);
         Double cash = Math.round(ThreadLocalRandom.current().nextDouble(10000.0, 200000.0) * 100.0) / 100.0;
         EnumData.VechicleBrands[] brands = new EnumData.VechicleBrands[2];
-        EnumData.VechicleType type = EnumData.VechicleType.values()[ThreadLocalRandom.current().nextInt(0, EnumData.VechicleType.values().length)];
-        // Pożadanym stanem pojazdu sterujemy za pomoca pola buyingVillingness w zbiorze ENUM CustomerVechicleCondition
-
-        int condition = ThreadLocalRandom.current().nextInt(0, 100);
-        int desiredCapacity = ThreadLocalRandom.current().nextInt(5, 15) * 100;
 
         for (int o = 0; o <= 1; o++) {
             brands[o] = EnumData.VechicleBrands.values()[ThreadLocalRandom.current().nextInt(0, EnumData.VechicleBrands.values().length)];
+        }
+
+        EnumData.VechicleType type;
+        if (brands[0].isCargo == true || brands[1].isCargo == true) {
+            type = EnumData.VechicleType.values()[ThreadLocalRandom.current().nextInt(0, EnumData.VechicleType.values().length)];
+        } else {
+            type = EnumData.VechicleType.CAR;
+        }
+        // Pożadanym stanem pojazdu sterujemy za pomoca pola buyingVillingness w zbiorze ENUM CustomerVechicleCondition
+
+        int condition = ThreadLocalRandom.current().nextInt(0, 100);
+        Integer desiredCapacity = null;
+        if (type == EnumData.VechicleType.TRUCK) {
+            desiredCapacity = ThreadLocalRandom.current().nextInt(5, 15) * 100;
         }
 
         Customer newCustomer = new Customer(firstName, lastName, brands, cash, type, condition, desiredCapacity);
