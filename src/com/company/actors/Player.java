@@ -6,6 +6,7 @@ import com.company.vechicles.Vechicle;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Player {
@@ -46,7 +47,8 @@ public class Player {
 
 
 
-    public void sellVechicle(Vechicle vechicle, Customer customer) throws Exception {
+    public Boolean sellVechicle(Vechicle vechicle, Customer customer) throws Exception {
+        Scanner sc = new Scanner(System.in);
         if (customer.money < vechicle.getValue()) {
             throw new Exception ("Klienta nie stac na zakup tego pojazdu."); // Wiem powinno być inglisz
         }
@@ -56,7 +58,27 @@ public class Player {
         if (customer.vechicleCondition > vechicle.conditionValue()) {
             throw new Exception("Klient nie chce tak uszkodzonego pojazdu.");
         }
+        System.out.println("Czy wytargowałeś dodtkową marże przy sprzedaży?");
+        System.out.println("\t [1] Tak");
+        System.out.println("\t [2] Nie");
+        int markup = sc.nextInt();
+        if (markup == 1) {
+            if (vechicle.millage < 150000.0){
+                System.out.println("Panie niemiec tylko w niedziele do kościółka jeździł.");
+            } else if (vechicle.brokenParts.size() < 1) {
+                System.out.println("Panie niemiec pod kocem trzymał");
+            } else {
+                System.out.println("Panie niemiec płakał jak sprzedawał.");
+            }
+            vechicle.setMarkup();
+        }
 
+        this.dealerCars.remove(vechicle);
+        this.cash += vechicle.getValue();
+        payTax(vechicle);
+
+
+        return true;
 
     }
 

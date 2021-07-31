@@ -1,5 +1,6 @@
 package com.company.vechicles;
 
+import com.company.actors.Mechanic;
 import com.company.game.EnumData;
 
 import java.util.ArrayList;
@@ -10,10 +11,11 @@ public class Vechicle {
     public String producer;
     Double value;
     String color;
-    Double millage;
-    Boolean needRepairs;
+    public Double millage;
+    public Boolean needRepairs;
     //    EnumData.Parts[] parts;
-    ArrayList<EnumData.Parts> brokenParts;
+    public ArrayList<EnumData.Parts> brokenParts;
+    public ArrayList<Repairs> repairHistory;
 
 
     public Vechicle(String producer, Double value, String color, Double millage, Boolean needRepairs, ArrayList<EnumData.Parts> brokenParts) {
@@ -38,6 +40,16 @@ public class Vechicle {
         else
             condition = EnumData.CustomerVechicleCondition.BROKEN.buyingVillingness;
         return condition;
+    }
+
+//    public Boolean doNeedRepair() {
+//        return needRepairs;
+//    }
+
+    public EnumData.Parts getBrokenParts(int i) {
+        EnumData.Parts[] parts = new EnumData.Parts[brokenParts.size()];
+        brokenParts.toArray(parts);
+        return parts[i];
     }
 
     public void setMarkup() {
@@ -66,6 +78,14 @@ public class Vechicle {
         }
         System.out.println("Nowa cena to: " + this.value);
     }
+
+    public void repairPart (EnumData.Parts part, Mechanic mechanic) {
+        this.brokenParts.remove(part);
+        this.value *= EnumData.Parts.valueOf(part.namePL).repairedValueMultiplier;
+        // TODO dodać logikę na powodzenie naprawy
+        // TODO add to reapirhistory
+    }
+
 
 //    public static void setBrokenParts(EnumData.Parts part) {
 //        brokenParts.add(part);

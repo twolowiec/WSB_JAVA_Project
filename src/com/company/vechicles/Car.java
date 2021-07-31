@@ -4,10 +4,9 @@ import com.company.game.EnumData;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Car extends Vechicle {
-    String segment;
+    public String segment;
 //    private EnumData.Parts[] parts;
 
     public Car(String producer, Double value, String color, Double millage, Boolean needRepairs, ArrayList<EnumData.Parts> brokenParts, String segment) {

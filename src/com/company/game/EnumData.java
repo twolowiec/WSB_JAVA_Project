@@ -17,8 +17,8 @@ public class EnumData {
         PREMIUM("Premium",2.5),
         STANDARD("Standard",1.4),
         BUDGET("Budget",1.0);
-        String displayName;
-        Double segmentPartsMultiplier;
+        public String displayName;
+        public Double segmentPartsMultiplier;
 
         CarSegment(String name,double multiplier) {
             this.displayName = name;
@@ -33,8 +33,8 @@ public class EnumData {
         BODY("Karoseria",1.5, 2400.00),
         TRANSMISSION("Skrzynia biegów",1.5, 3200.00);
         public String namePL;
-        Double repairedValueMultiplier;
-        Double partsPrice;
+        public Double repairedValueMultiplier;
+        public Double partsPrice;
 
         Parts(String namePL, double multiplier, double price) {
             this.namePL = namePL;
@@ -58,14 +58,14 @@ public class EnumData {
     }
 
     public enum Mechanics {
-        JANUSZ("Janusz",3.0,100,0),
+        JANUSZ("Janusz",2.5,100,0),
         MARIAN("Marian",1.1,90,0),
         ADRIAN("Adrian",0.6,80,2);
 
-        String displayName;
-        Double priceMultiplier;
-        Integer efficiency;
-        Integer failureChance;
+        public String displayName;
+        public Double priceMultiplier;
+        public Integer efficiency;
+        public Integer failureChance;
 
         Mechanics(String name, Double priceMultiplier, Integer efficiency, Integer failureChance) {
             this.displayName = name;

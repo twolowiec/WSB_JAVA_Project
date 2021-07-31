@@ -1,5 +1,7 @@
 package com.company.game;
 
+import com.company.Effects;
+
 import java.util.Scanner;
 
 public class Menus {
@@ -41,22 +43,36 @@ public class Menus {
     }
 
 
-    public int repairMenu () {
-        System.out.print("Który pojazd chcesz naprawić? ");
-        // lista tylko z uszkodzeniami
-        // todo opcja powrotu
-        System.out.print("Twój wybór: ");
-        return scanner.nextInt();
+    public void vechicleMenu (boolean onceForATurn) {
+        if (onceForATurn) {
+            System.out.println("Wybierz co chcesz zrobić z pojazdem: ");
+            System.out.println("\t[2] Sprawdzić historię napraw pojazdu.");
+            System.out.println("\t[3] Sprawdzić koszty związane z pojazdem.");
+            System.out.println("\t[4] Ustawić marże na cenie.");
+            System.out.println("\t[8] Powrót do poprzedniego menu.");
+            System.out.print("Twój wybór: ");
+        } else {
+            System.out.println("Wybierz co chcesz zrobić z pojazdem: ");
+            System.out.println("\t[1] Naprawić pojazd.");
+            System.out.println("\t[2] Sprawdzić historię napraw pojazdu.");
+            System.out.println("\t[3] Sprawdzić koszty związane z pojazdem.");
+            System.out.println("\t[4] Ustawić marże na cenie.");
+            System.out.println("\t[8] Powrót do poprzedniego menu.");
+            System.out.print("Twój wybór: ");
+        }
     }
 
-    public int mechanicMenu () {
+    public void mechanicMenu (boolean onceForATurn) {
+        if (onceForATurn) {
+            System.out.println("Nie możesz naprawić żadnego auta w tej turze.");
+            Effects.pressAnyKey();
+        }
         System.out.println("Wybierz z czyich usług chcesz skorzystać:");
         System.out.println("[1] Janusz - najdroższy, 100% szans na naprawę usterki"); // dodać cenę
         System.out.println("[2] Marian - tańszy, ale tylko 90% szans na naprawę usterki"); // dodać cenę
         System.out.println("[3] Adrian - najtańszy, tylko 80% szans na naprawę usterki i 2% szans na zepsucię czegoś innego"); // dodać cenę
         System.out.println("[8] Powrót do głownego menu.");
         System.out.print("Twój wybór: ");
-        return scanner.nextInt();
     }
 
     public void advertisementMenu () {

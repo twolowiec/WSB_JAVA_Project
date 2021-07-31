@@ -1,7 +1,6 @@
 package com.company;
 
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 public class Effects {
 
@@ -42,7 +41,7 @@ public class Effects {
         for (int i = 1; i <= 10; i++) {
 //            Thread.sleep(100);
             System.out.print("\t\t\t\t\t\t\t YOU LOSE!!!");
-            TimeUnit.MILLISECONDS.sleep(200);
+            Thread.sleep(200);
             System.out.println("\b\b\b\b\b\b\b\b\b\b\b");
         }
         System.out.println("\t\t\t\t\t\t\t YOU LOSE!!!");
