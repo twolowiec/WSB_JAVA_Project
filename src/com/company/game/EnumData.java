@@ -180,7 +180,7 @@ public class EnumData {
         INCOME("Uznanie"),
         OUTCOME("Obciążenie");
 
-        String operationNamePL;
+        public String operationNamePL;
 
         AccountOperations(String operatoinName) {
             this.operationNamePL = operatoinName;
@@ -188,13 +188,10 @@ public class EnumData {
     }
 
     public enum VechicleHistory {
-        BUY("Zakup"),
-        SELL("Sprzedaż"),
         DETAILING("Mycie pojazdu"),
-        REPAIR("Naprawa pojazdu"),
-        TAX("Podatek");
+        REPAIR("Naprawa pojazdu");
 
-        String namePL;
+        public String namePL;
 
         VechicleHistory(String namePL) {
             this.namePL = namePL;
@@ -209,7 +206,7 @@ public class EnumData {
         REPAIR("Naprawa pojazdu"),
         TAX("Podatek");
 
-        String namePL;
+        public String namePL;
 
         Costs(String namePL) {
             this.namePL = namePL;

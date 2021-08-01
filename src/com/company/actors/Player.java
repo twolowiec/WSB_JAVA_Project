@@ -1,6 +1,7 @@
 package com.company.actors;
 
 import com.company.game.EnumData;
+import com.company.game.Game;
 import com.company.game.Transaction;
 import com.company.vechicles.Vechicle;
 
@@ -31,15 +32,26 @@ public class Player {
         return transactions;
     }
 
+    public String getTransactions(Vechicle vechicle) {
+        String transact = "";
+        for (Transaction transaction : transactions) {
+            if (vechicle == transaction.vechicle) {
+                 transact += transaction.toString();
+            }
+
+        }
+        return transact;
+    }
+
     public void buyMarketVechicle(Vechicle vechicle) {
         if (cash < vechicle.getValue()) {
             System.out.println("Nie stać Cię na zakup tego pojazdu.");
         } else {
             this.dealerCars.add(vechicle);
-            // TODO zdjąć pojazd z marketu i dodac nowy (przenieść market do klasy)
+
             this.cash -= vechicle.getValue();
 
-            // TODO add to transactions
+            addTransaction(EnumData.Costs.BUY, vechicle, (vechicle.getValue() * -1));
             System.out.println("Zakupiłeś nastepujący pojazd: \n" + vechicle.toString());
             payTax(vechicle);
         }
@@ -77,7 +89,7 @@ public class Player {
         this.cash += vechicle.getValue();
         payTax(vechicle);
 
-
+        addTransaction(EnumData.Costs.SELL, vechicle, vechicle.getValue());
         return true;
 
     }
@@ -86,7 +98,7 @@ public class Player {
         double tax = vechicle.getValue() * 0.02;
         this.cash -= tax;
         System.out.println("Zapłaciłeś 2% podatku od wartości pojazdu: " + NumberFormat.getCurrencyInstance().format(tax));
-        // TODO add to transactions
+        addTransaction(EnumData.Costs.TAX, vechicle, (tax * -1));
     }
 
     public Integer buyAd (EnumData.Advertisement advertisement) {
@@ -101,6 +113,7 @@ public class Player {
         }
         this.cash -= (double) adCost;
         // TODO add to transactions
+        addTransaction(EnumData.Costs.ADVIERTISEMENT, null, ((double)adCost * -1));
 
         System.out.println("Kupiłeś reklamę w: " + advertisement.namePL);
         System.out.println("Za kwotę: " + NumberFormat.getCurrencyInstance().format(adCost));
@@ -109,7 +122,17 @@ public class Player {
         return newCustomers;
     }
 
+    public void addTransaction (EnumData.Costs title, Vechicle vechicle, Double value) {
+        EnumData.AccountOperations operation = null;
+        if (value > 0) {
+            operation = EnumData.AccountOperations.INCOME;
+        } else {
+            operation = EnumData.AccountOperations.OUTCOME;
+        }
+        Transaction transaction = new Transaction(vechicle, operation, title, Game.turn, value, cash);
 
+        transactions.add(transaction);
+    }
 
     public Double getCash () {
         return cash;

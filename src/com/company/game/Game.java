@@ -21,11 +21,11 @@ public class Game extends Menus {
     Integer cashMultiplier;
     Integer turnLimit;
 
-    Integer turn = 1;
+    public static Integer turn = 1;
     Boolean onceATurn = false;
     Boolean winingCondition = false;
 
-    public Game(Integer noPlayers, Double startingCash, Integer cashMultiplier, Integer turnLimit) throws Exception {
+    public Game(Integer noPlayers, Double startingCash, Integer cashMultiplier, Integer turnLimit) {
         this.noOfPlayers = noPlayers;
         this.startingCash = startingCash;
         this.cashMultiplier = cashMultiplier;
@@ -95,8 +95,11 @@ public class Game extends Menus {
                         Vechicle.id = i + 1;
                         System.out.println(player.getDealerCars().get(i).toString());
                     }
-                    System.out.print("\nPodaj nr pojazdu dla którego chcesz wykonać akcje: ");
+                    System.out.print("\nPodaj nr pojazdu dla którego chcesz wykonać akcje lub [0] aby powrócić: ");
                     int chooseVechicle = sc.nextInt();
+                    if (chooseVechicle == 0) {
+                        break;
+                    }
                     Effects.clearConsole();
                     Vechicle vechicle = player.getDealerCars().get(chooseVechicle - 1);
                     vechicle.toString();
@@ -118,7 +121,7 @@ public class Game extends Menus {
                                     System.out.println("\t[" + (i + 1) + "] " + vechicle.getBrokenParts(i).namePL);
                                 }
                                 System.out.println("\t[8] Powrót do głownego menu.");
-                                System.out.print("Twój wybór:");
+                                System.out.print("Twój wybór: ");
                                 int partChoice = sc.nextInt();
                                 if (partChoice == 8) break;
                                 else {
@@ -126,7 +129,8 @@ public class Game extends Menus {
                                     Double partPrice = vechicle.getBrokenParts(partChoice - 1).partsPrice;
                                     Double brandMultiplier = EnumData.VechicleBrands.valueOf(vechicle.producer).partsBrandMultiplier;
                                     if (vechicle instanceof Car)
-                                        segmentMultiplier = EnumData.CarSegment.valueOf(((Car) vechicle).segment).segmentPartsMultiplier;
+                                        segmentMultiplier = ((Car) vechicle).segment.segmentPartsMultiplier;
+//                                                EnumData.CarSegment.values().equals(EnumData.VechicleBrands.valueOf(((Car) vechicle).segment.displayName)).segmentPartsMultiplier;
                                     else
                                         segmentMultiplier = 0.9;
                                     System.out.println("U kogo chcesz dokonac naprawy " + vechicle.getBrokenParts(partChoice - 1).namePL + "?");
@@ -136,34 +140,45 @@ public class Game extends Menus {
                                     System.out.println("[3] U " + adrian.name + "a za kwotę: " + NumberFormat.getCurrencyInstance().format(adrian.getRepairPrice(partPrice, segmentMultiplier, brandMultiplier)));
                                     System.out.print("Twój wybór: ");
                                     int mechanicChoice = sc.nextInt();
+                                    double repairCost = 0.0;
                                     switch (mechanicChoice) {
                                         case 1:
                                             vechicle.repairPart(vechicle.getBrokenParts(partChoice - 1), janusz);
-                                            player.cash -= janusz.getRepairPrice(partPrice, segmentMultiplier, brandMultiplier);
+                                            repairCost = janusz.getRepairPrice(partPrice, segmentMultiplier, brandMultiplier);
                                             break;
                                         case 2:
                                             vechicle.repairPart(vechicle.getBrokenParts(partChoice - 1), marian);
-                                            player.cash -= marian.getRepairPrice(partPrice, segmentMultiplier, brandMultiplier);
+                                            repairCost = marian.getRepairPrice(partPrice, segmentMultiplier, brandMultiplier);
                                             break;
                                         case 3:
                                             vechicle.repairPart(vechicle.getBrokenParts(partChoice - 1), adrian);
-                                            player.cash -= adrian.getRepairPrice(partPrice, segmentMultiplier, brandMultiplier);
+                                            repairCost = adrian.getRepairPrice(partPrice, segmentMultiplier, brandMultiplier);
                                             break;
+
                                     }
+                                    player.cash -= repairCost;
+                                    player.addTransaction(EnumData.Costs.REPAIR, vechicle, (repairCost * -1));
+                                    onceATurn = true;
                                 }
                             }
+                            break;
                         }
                         case 2: {
-                            // obiekty repiar dla danego auta
+                            vechicle.getRepairHistory();
                             break;
 
                         }
                         case 3: {
-                            // Transakcje filtrownae po pojeździe
+                            player.getTransactions(vechicle);
                             break;
                         }
                         case 4: {
                             vechicle.setMarkup();
+                            break;
+                        }
+                        case 5: {
+                            Double cost = vechicle.washVechicle();
+                            player.addTransaction(EnumData.Costs.DETAILING, vechicle, cost * -1);
                             break;
                         }
                         case 8: {
@@ -181,8 +196,12 @@ public class Game extends Menus {
                         Customer.id = i + 1;
                         System.out.printf(customers.get(i).toString());
                     }
-                    System.out.print("Wybierz ID klienta z którym chcesz przeprowadzić transakcje: ");
+                    System.out.println("Wybierz [0] aby powrócić lub");
+                    System.out.print("\nWybierz ID klienta z którym chcesz przeprowadzić transakcje: ");
                     int clientId = sc.nextInt();
+                    if (clientId == 0){
+                        break;
+                    }
                     Effects.clearConsole();
                     Customer customer = customers.get(clientId-1);
                     customer.toString();
@@ -195,12 +214,17 @@ public class Game extends Menus {
                     int chooseVechicle = sc.nextInt();
                     Vechicle vechicle = player.getDealerCars().get(chooseVechicle - 1);
 
-                    if (player.sellVechicle(vechicle, customer) == true) {
-                        System.out.println("Sprzedaż zakończona sukcesem!");
-                        customers.remove(customer);
-                        System.out.println("Transakcja generuje 2 nowych klientów.");
-                        customers.add(generateCustomer());
-                        customers.add(generateCustomer());
+                    try {
+                        if (player.sellVechicle(vechicle, customer) == true) {
+                            System.out.println("Sprzedaż zakończona sukcesem!");
+                            customers.remove(customer);
+                            System.out.println("Transakcja generuje 2 nowych klientów.");
+                            customers.add(generateCustomer());
+                            customers.add(generateCustomer());
+
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                     Effects.pressAnyKey();
                     break;
@@ -230,19 +254,9 @@ public class Game extends Menus {
                     break;
                 }
                 case 6: {
-                    System.out.println("Wybrałeś 6");
-                    player.getTransactions().toString();
+                    System.out.println(player.getTransactions().toString());
                     break;
                 }
-//                case 7: {
-//                    System.out.println("Wybrałeś 7");
-//                    player.cash += 100001.00;
-//                    break;
-//                }
-//                case 8: {
-//                    System.out.println("Wybrałeś 8");
-//                    break;
-//                }
                 case 9: {
                     this.turn++;
                     this.onceATurn = false;
@@ -252,7 +266,11 @@ public class Game extends Menus {
                     }
                     System.out.println("Na rynku pojawiły się " + i + " nowe pojazdy.");
                     // może to w jakiś komunikat zapiąć/zebrać
-                    Effects.loading("nowej tury");
+                    try {
+                        Effects.loading("nowej tury");
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 }
                 default:
@@ -271,10 +289,18 @@ public class Game extends Menus {
         } while (isWiningConditionMeet(player) && mainMenu != 0 && isLoseGameConditionMeet());
 
         if (!isWiningConditionMeet(player)) {
-            Effects.winner(playerName);
+            try {
+                Effects.winner(playerName);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         } else if (!isLoseGameConditionMeet()) {
             //todo w przypadku gry na więcej niż 1 gracza dodatkowy warunek
-            Effects.loser();
+            try {
+                Effects.loser();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         } else {
             Effects.clearConsole();
             System.out.println("\n\n\n\n\n\n\n\n\n");
@@ -290,6 +316,7 @@ public class Game extends Menus {
     }
 
     Boolean isLoseGameConditionMeet() {
+
         // When returns false - breaks the loop
         if (this.turnLimit == null)
             return true;

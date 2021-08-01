@@ -78,7 +78,7 @@ public class Generators {
         }
 
         String color = EnumData.Color.values()[ThreadLocalRandom.current().nextInt(0, EnumData.Color.values().length)].colorNamePL;
-        String segment = brand.segment.displayName;
+        EnumData.CarSegment segment = brand.segment;
         double millage = Math.round(ThreadLocalRandom.current().nextDouble(500.0, 4000.0) * 1000.0) / 10.0;
         double price = brand.mediumPricePersonal;
         double value;
@@ -108,6 +108,7 @@ public class Generators {
                 if (i == 5) break;
             }
         }
+        if (brokenParts.size() < 1) broken = false;
         String color = EnumData.Color.values()[ThreadLocalRandom.current().nextInt(0, EnumData.Color.values().length)].colorNamePL;
         double millage = Math.round(ThreadLocalRandom.current().nextDouble(500.0, 4000.0) * 1000.0) / 10.0;
         Integer capacity = brand.cargoCapacity;

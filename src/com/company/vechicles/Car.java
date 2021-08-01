@@ -6,10 +6,10 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 
 public class Car extends Vechicle {
-    public String segment;
+    public EnumData.CarSegment segment;
 //    private EnumData.Parts[] parts;
 
-    public Car(String producer, Double value, String color, Double millage, Boolean needRepairs, ArrayList<EnumData.Parts> brokenParts, String segment) {
+    public Car(String producer, Double value, String color, Double millage, Boolean needRepairs, ArrayList<EnumData.Parts> brokenParts, EnumData.CarSegment segment) {
         super(producer, value, color, millage, needRepairs, brokenParts);
         this.segment = segment;
     }
@@ -22,6 +22,11 @@ public class Car extends Vechicle {
 //        return partString;
 //    }
 
+
+    public EnumData.CarSegment getSegment() {
+        return segment;
+    }
+
     @Override
     public String toString() {
         String bParts = "";
@@ -32,7 +37,7 @@ public class Car extends Vechicle {
         return "\nSamochód osobowy: " + "[" + id + "]\n" +
                 "\tProducent: " + producer + '\n' +
                 "\tCena: " + NumberFormat.getCurrencyInstance().format(value) + '\n' +
-                "\tSegment: " + segment + '\n' +
+                "\tSegment: " + segment.displayName + '\n' +
                 "\tKolor: " + color + '\n' +
                 "\tPrzebieg: " + millage + " km\n" +
                 "\tCzy wymaga naprawy: " + ((needRepairs) ? "Tak" : "Nie") + "\n" +

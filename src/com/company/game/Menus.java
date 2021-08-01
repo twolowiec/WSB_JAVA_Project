@@ -16,12 +16,10 @@ public class Menus {
         if (onceForATurn) {
             System.out.println("Wybierz opcje podajac cyfrę z klawiatury:");
             System.out.println("[1] Przeglądaj bazę pojazdów do kupienia.");
-            System.out.println("[2] Przeglądaj bazę posiadanych pojazdów (+ historia pojazdów i naprawy).");
-            System.out.println("[3] Przeglądaj bazę potencjalnych klientów.");
+            System.out.println("[2] Przeglądaj bazę posiadanych pojazdów (+ historia, naprawy, etc.).");
+            System.out.println("[3] Przeglądaj bazę potencjalnych klientów (+sprzedaż).");
             System.out.println("[4] Informacje o koncie.");
             System.out.println("[6] Przeglądaj historie transakcji.");
-            System.out.println("[7] Sprawdź historie napraw każdego pojazdu.");
-            System.out.println("[8] Sprawdź historie kosztów każdego pojazdu.");
             System.out.println("[9] Zakończ turę.");
             System.out.println("[0] Opuść program.");
             System.out.print("Twój wybór: ");
@@ -29,13 +27,11 @@ public class Menus {
         } else {
             System.out.println("Wybierz opcje podajac cyfrę z klawiatury:");
             System.out.println("[1] Przeglądaj bazę pojazdów do kupienia.");
-            System.out.println("[2] Przeglądaj bazę posiadanych pojazdów (przegląd placu).");
-            System.out.println("[3] Przeglądaj bazę potencjalnych klientów.");
+            System.out.println("[2] Przeglądaj bazę posiadanych pojazdów (+ historia, naprawy, etc.).");
+            System.out.println("[3] Przeglądaj bazę potencjalnych klientów (+sprzedaż).");
             System.out.println("[4] Informacje o koncie.");
             System.out.println("[5] Kup reklamę.");
             System.out.println("[6] Przeglądaj historie transakcji.");
-            System.out.println("[7] Sprawdź historie napraw każdego pojazdu."); // do wywalenia z głównego menu
-            System.out.println("[8] Sprawdź historie kosztów każdego pojazdu."); // do wywalenia z głównego menu
             System.out.println("[9] Zakończ turę.");
             System.out.println("[0] Opuść grę.");
             System.out.print("Twój wybór: ");
@@ -49,6 +45,7 @@ public class Menus {
             System.out.println("\t[2] Sprawdzić historię napraw pojazdu.");
             System.out.println("\t[3] Sprawdzić koszty związane z pojazdem.");
             System.out.println("\t[4] Ustawić marże na cenie.");
+            System.out.println("\t[5] Czyszczenie, woskowanie, polerowanie.");
             System.out.println("\t[8] Powrót do poprzedniego menu.");
             System.out.print("Twój wybór: ");
         } else {
@@ -57,6 +54,7 @@ public class Menus {
             System.out.println("\t[2] Sprawdzić historię napraw pojazdu.");
             System.out.println("\t[3] Sprawdzić koszty związane z pojazdem.");
             System.out.println("\t[4] Ustawić marże na cenie.");
+            System.out.println("\t[5] Czyszczenie, woskowanie, polerowanie.");
             System.out.println("\t[8] Powrót do poprzedniego menu.");
             System.out.print("Twój wybór: ");
         }

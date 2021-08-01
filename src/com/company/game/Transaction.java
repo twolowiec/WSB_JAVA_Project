@@ -1,27 +1,33 @@
 package com.company.game;
 
-import com.company.actors.Customer;
 import com.company.vechicles.Vechicle;
 
-public class Transaction {
-    public Vechicle vechicle;
-    public Customer customer;
-    public Integer turn;
-    public Double price;
+import java.text.NumberFormat;
 
-    public Transaction(Vechicle vechicle, Customer customer, Integer turn, Double price) {
+public class Transaction {
+    public EnumData.AccountOperations operation;
+    public EnumData.Costs title;
+    public Vechicle vechicle;
+    public Integer turn;
+    public Double value;
+    public Double balance;
+
+    public Transaction(Vechicle vechicle, EnumData.AccountOperations operation, EnumData.Costs title, Integer turn, Double value, Double balance) {
+        this.operation = operation;
+        this.title = title;
         this.vechicle = vechicle;
-        this.customer = customer;
         this.turn = turn;
-        this.price = price;
+        this.value = value;
+        this.balance = balance;
     }
 
     @Override
     public String toString() {
-        return "Operacja dotyczyła: " + "\n" +
-                "\tPojazd: " + vechicle + "\n" +
-                "\tKlient: " + customer + "\n" +
-                "\tTura: " + turn +"\n" +
-                "\tKwota: " + price +"\n";
+        return "\nOperacja: " + operation.operationNamePL +
+                "\tTytułem: " + title.namePL +
+                "\tPojazd: " + vechicle.producer +
+                "\tTura: " + turn +
+                "\tKwota: " + NumberFormat.getCurrencyInstance().format(value) +
+                "\tStan konta: " + NumberFormat.getCurrencyInstance().format(balance);
     }
 }

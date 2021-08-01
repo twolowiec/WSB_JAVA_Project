@@ -49,7 +49,7 @@ public class Customer {
                 "\tTyp pojazdu: " + ((vechicleType == EnumData.VechicleType.CAR) ? "Osobowy" : "Dostawczy") + '\n' +
                 ((vechicleType == EnumData.VechicleType.TRUCK) ? "\tOczekiwana ładowność: " + desiredCapacity : "") +
                 "\n\tDopuszczalny stan: " + acceptableState(vechicleCondition) +
-                "\n------------------------------------------------------------";
+                "\n------------------------------------------------------------\n";
     }
 
 }
